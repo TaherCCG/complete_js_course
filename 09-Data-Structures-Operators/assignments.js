@@ -325,3 +325,321 @@ function printBookAuthorsCount(title, ...authors) {
 printBookAuthorsCount('Algorithms', 'Robert Sedgewick', 'Kevin Wayne');
 
 ///////////////////////////////////////////
+
+// Assignment 5 - Short Circuiting (&& and ||)
+
+// 5.1)
+function hasExamplesInJava(book) {
+  return book.programmingLanguage === 'Java' || 'no data available';
+}
+
+hasExamplesInJava(books[0]);
+hasExamplesInJava(books[1]);
+
+// 5.2)
+for (let i = 0; i < books.length; i++) {
+  books[i].onlineContent &&
+    console.log(`"${books[i].title}" provides online content`);
+}
+
+///////////////////////////////////////////
+
+// Assignment 6 - The Nullish Coalescing Operator (??)
+
+// 6.1)
+for (let i = 0; i < books.length; i++) {
+  books[i].onlineContent ??
+    console.log(
+      `"${books[i].title} provides no data about its online content"`
+    );
+}
+
+///////////////////////////////////////////
+
+// Assignment 7 - Logical Assignment Operators
+
+// 7.1)
+for (let i = 0; i < books.length; i++) {
+  books[i].edition ||= 1;
+}
+
+// 7.2)
+for (let i = 0; i < books.length; i++) {
+  books[i].highlighted &&= !(books[i].thirdParty.goodreads.rating < 4.2);
+}
+
+///////////////////////////////////////////
+
+// Assignment 8 - Looping Arrays: The for-of Loop
+
+// 8.1)
+let pageSum = 0;
+
+for (let book of books) {
+  pageSum += book.pages;
+}
+
+// 8.2)
+const allAuthors = [];
+for (const book of books) {
+  if (typeof book.author === 'string') {
+    allAuthors.push(book.author);
+  } else {
+    for (const author of book.author) {
+      allAuthors.push(author);
+    }
+  }
+}
+
+// 8.3)
+for (const [index, author] of allAuthors.entries()) {
+  console.log(`${index + 1}. ${author}`);
+}
+
+///////////////////////////////////////////
+
+// Assignment 9 - Enhanced Object Literals
+
+// 9.1)
+
+const bookData = [
+  ['title', 'Computer Networking: A Top-Down Approach'],
+  ['author', ['James F. Kurose', 'Keith W. Ross']],
+  ['publisher', 'Addison Wesley'],
+];
+
+// Do the rest
+const newBook = {
+  [bookData[0][0]]: bookData[0][1],
+  [bookData[1][0]]: bookData[1][1],
+  [bookData[2][0]]: bookData[2][1],
+};
+
+// 9.2)
+const pages = 880;
+
+const newBook2 = {
+  title: 'The C Programming Language',
+  author: ['Brian W. Kernighan', 'Dennis M. Ritchie'],
+  pages,
+};
+
+///////////////////////////////////////////
+
+// Assignment 10 - Optional Chaining
+
+// 10.1)
+function getFirstKeyword(book) {
+  return book.keywords?.[0];
+}
+
+getFirstKeyword(books[0]);
+getFirstKeyword(newBook2);
+
+///////////////////////////////////////////
+
+// Assignment 11 - Looping Objects: Object Keys, Values, and Entries
+
+// 11.1)
+const entries = [];
+
+for (const key of Object.keys(books[0].thirdParty.goodreads)) {
+  entries.push([key]);
+}
+
+// 11.2)
+for (const [index, value] of Object.values(
+  books[0].thirdParty.goodreads
+).entries()) {
+  entries[index].push(value);
+}
+
+// 11.3)
+const entries2 = Object.entries(books[0].thirdParty.goodreads);
+
+// 11.4)
+console.log(entries);
+console.log(entries2);
+
+///////////////////////////////////////////
+
+// Assignment 12 - Sets
+
+// 12.1)
+const allKeywords = [];
+for (const book of books) {
+  allKeywords.push(...book.keywords);
+}
+
+// 12.2)
+const uniqueKeywords = [...new Set(allKeywords)];
+
+// 12.3)
+uniqueKeywords.push('science');
+uniqueKeywords.push('science');
+
+// 12.4)
+uniqueKeywords.pop('business');
+
+// 12.5)
+const uniqueKeywordsArr = [...uniqueKeywords];
+
+// 12.6)
+// uniqueKeywords.clear();
+uniqueKeywords.length = 0;
+
+///////////////////////////////////////////
+
+// Assignment 13 - Maps
+// 13.1)
+const bookMap = new Map([
+  ['title', 'Clean Code'],
+  ['author', 'Robert C. Martin'],
+]);
+
+// 13.2)
+bookMap.set('pages', 464);
+
+// 13.3)
+console.log(`"${bookMap.get('title')}" by ${bookMap.get('author')}`);
+
+// 13.4)
+console.log(bookMap.size);
+
+// 13.5)
+if (bookMap.has('author')) console.log('The author is known');
+
+///////////////////////////////////////////
+
+// Assignment 14 - Working with Strings
+
+// 14.1)
+const firstBookMap = new Map(Object.entries(books[0]));
+
+// 14.2)
+for (const [key, value] of firstBookMap) {
+  if (typeof value === 'number') console.log(key);
+}
+
+///////////////////////////////////////////
+
+// Assignment 15 - Working with Strings
+
+// 15.1)
+console.log(
+  books[0].ISBN['6'],
+  books[0].ISBN['4'],
+  books[0].ISBN['9'],
+  books[0].ISBN[8]
+);
+
+// 15.2)
+const quote =
+  'A computer once beat me at chess, but it was no match for me at kick boxing';
+console.log(quote.indexOf('chess'));
+
+// 15.3)
+console.log(quote.slice(quote.lastIndexOf(' ') + 1));
+
+// 15.4)
+function isContributor(author) {
+  return author.lastIndexOf('(Contributor)') !== -1;
+}
+
+isContributor('Julie Sussman (Contributor)');
+isContributor('Robert Sedgewick');
+
+///////////////////////////////////////////
+
+// Assignment 16 - Working with Strings
+
+// 16.1)
+
+function normalizeAuthorName(author) {
+  author = author.trim();
+  const firstName = author.slice(0, author.indexOf(' '));
+
+  let lastName = '';
+  if (author.indexOf(' ') === author.lastIndexOf(' ')) {
+    lastName = author.slice(author.indexOf(' ') + 1, author.length);
+  } else {
+    lastName = author.slice(author.indexOf(' ') + 1, author.lastIndexOf(' '));
+  }
+
+  const capitalizedFirstName =
+    firstName[0].toUpperCase() + firstName.slice(1).toLowerCase();
+  const capitalizedLastName =
+    lastName[0].toUpperCase() + lastName.slice(1).toLowerCase();
+
+  return capitalizedFirstName + ' ' + capitalizedLastName;
+}
+
+normalizeAuthorName('  JuliE sussMan (Contributor)');
+
+// 16.2)
+const newBookTitle = books[1].title.replace('Programs', 'Software');
+
+// 16.3)
+function logBookTheme(title) {
+  title = title.toLowerCase();
+
+  if (title.startsWith('computer')) {
+    console.log('This book is about computers');
+  } else if (title.includes('algorithms') && title.includes('structures')) {
+    console.log('This book is about algorithms and data structures');
+  } else if (
+    (title.endsWith('system') || title.endsWith('systems')) &&
+    !title.includes('operating')
+  ) {
+    console.log(
+      'This book is about some systems, but definitely not about operating systems'
+    );
+  }
+}
+
+///////////////////////////////////////////
+
+// Assignment 17 - Working with Strings
+
+// 17.1)
+
+const bookCategories =
+  'science;computing;computer science;algorithms;business;operating systems;networking;electronics';
+logBookCategories(bookCategories);
+
+function logBookCategories(str) {
+  const categories = str.split(';');
+
+  for (let category of categories) {
+    console.log(category);
+  }
+}
+
+// 17.2)
+function getKeywordsAsString(books) {
+  const keywords = [];
+
+  for (const book of books) {
+    keywords.push(...book.keywords);
+  }
+
+  const uniqueKeywords = [...new Set(keywords)];
+
+  return uniqueKeywords.join(';');
+}
+getKeywordsAsString(books);
+
+// 17.3)
+const bookChapters = [
+  ['The Basics', 14],
+  ['Sorting', 254],
+  ['Searching', 372],
+  ['Graphs', 526],
+  ['Strings', 706],
+];
+logBookChapters(bookChapters);
+function logBookChapters(chapters) {
+  for (const [chapter, pages] of chapters) {
+    console.log(chapter.padEnd(20, '_') + ' ' + pages);
+  }
+}
