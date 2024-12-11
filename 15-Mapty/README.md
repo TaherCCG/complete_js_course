@@ -2,7 +2,7 @@
 
 _Walkthrough project - The Complete JavaScript Course 2024: From Zero to Expert!_
 
-**_Will be working on this app at later stage to make it more user friendly, more features, the ability for users to log and track their progress on any device and responsivene design. At the moment its completed as upto the walkthrough Lecture._**
+**_Will be working on this app at later stage to make it more user friendly, more features, the ability for users to log and track their progress on any device and responsive design. At the moment its completed as upto the walkthrough Lecture._**
 
 ## User Stories
 
